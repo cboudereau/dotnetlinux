@@ -7,29 +7,29 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
 ## Setup
     docker run -it --name mysqlpoc --hostname mysqlpoc -p 3306:3306 centos:6 
   
-  # Install mysql-server
-  yum update
-  yum install mysql-server
-  /sbin/chkconfig --levels 235 mysqld on
-  # Yes to all expect for root remoting and use Hello as password, only for tests!
-  mysql_secure_installation
+    # Install mysql-server
+    yum update
+    yum install mysql-server
+    /sbin/chkconfig --levels 235 mysqld on
+    # Yes to all expect for root remoting and use Hello as password, only for tests!
+    mysql_secure_installation
   
-  # Create the Database
-  mysql -uroot -pHello
-  create database mysqlpoc;
-  create table person (id int not null auto_increment primary key, name text);
-  insert into person (name) values ('Hello');
-  select * from person;
+    # Create the Database
+    mysql -uroot -pHello
+    create database mysqlpoc;
+    create table person (id int not null auto_increment primary key, name text);
+    insert into person (name) values ('Hello');
+    select * from person;
  
 ## Build
-  build.cmd
+    build.cmd
   
 ## Deploy
-  docker cp CentOsTest\bin\Release\netcoreapp3.0\rhel.6-x64\publish mysqlpoc:/home/centostest
+    docker cp CentOsTest\bin\Release\netcoreapp3.0\rhel.6-x64\publish mysqlpoc:/home/centostest
   
 ## Run
-  docker exec -it mysqlpoc bash
-  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true /home/centostest/CentOsTest
+    docker exec -it mysqlpoc bash
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true /home/centostest/CentOsTest
   
 ## Known issues
 
