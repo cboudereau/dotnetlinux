@@ -5,7 +5,7 @@ This repo contains a sample app which connect on a local mysql to make basic sel
 The setup part contains the demo env with centos 6 + mysql. Please do not do that in prod, this config is only for dev.
 
 ## Setup
-  docker run -it --name mysqlpoc --hostname mysqlpoc -p 3306:3306 centos:6 
+    docker run -it --name mysqlpoc --hostname mysqlpoc -p 3306:3306 centos:6 
   
   # Install mysql-server
   yum update
@@ -25,12 +25,14 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
   build.cmd
   
 ## Deploy
-  docker cp C:\Users\Clément\source\repos\CentOsTest\CentOsTest\bin\Release\netcoreapp3.0\rhel.6-x64\publish mysqlpoc:/home/centostest
+  docker cp CentOsTest\bin\Release\netcoreapp3.0\rhel.6-x64\publish mysqlpoc:/home/centostest
   
 ## Run
+  docker exec -it mysqlpoc bash
   DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true /home/centostest/CentOsTest
   
 ## Known issues
 
 - Fix globalization (this is why I use DOTNET_SYSTEM_GLOBALIZATION_INVARIANT env var)
-- Fix the local build which failed in VS but works in the build script. 
+- Fix the local build which failed in VS but works in the build script.
+- Fix the PublishTrimmed which run for a very long time consuming 25% of CPU. 
