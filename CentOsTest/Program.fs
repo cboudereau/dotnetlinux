@@ -31,7 +31,7 @@ let ctx = sql.GetDataContext()
 [<EntryPoint>]
 let main argv =
     
-    printfn "Who do you want to add in mysql ?"
+    printfn "Who do you want to add in mysql (press enter to skip this step) ?"
 
     System.Console.ReadLine() |> fun x -> if x <> "" then Some x else None
     |> Option.map (fun name -> let p = ctx.Mysqlpoc.Person.Create() in p.Name <- Some name; ctx.SubmitUpdates(); sprintf "%s has been added" name)
