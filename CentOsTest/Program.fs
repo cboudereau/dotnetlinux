@@ -19,12 +19,11 @@ type sql = SqlDataProvider<
             IndividualsAmount = indivAmount,
             UseOptionTypes = useOptTypes
             >
-open System
 
-let ctx = sql.GetDataContext()
 
 [<EntryPoint>]
-let main argv =
+let main _argv =
+    let ctx = sql.GetDataContext()
     
     printfn "Who do you want to add in mysql (press enter to skip this step) ?"
 
