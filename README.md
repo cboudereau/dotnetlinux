@@ -1,6 +1,6 @@
 # CentOsTest
 
-This repo contains a sample app which connect on a local mysql to make basic select and insert operations.
+This repo contains a sample app which connect on a local mysql to make basic select and insert operations exposed as a simple http api.
 
 The setup part contains the demo env with centos 6 + mysql. Please do not do that in prod, this config is only for dev.
 
