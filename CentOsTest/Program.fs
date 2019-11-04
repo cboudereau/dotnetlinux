@@ -53,7 +53,8 @@ let add x =
 
     do ctx.SubmitUpdates()
     
-    query { for p in ctx.Mysqlpoc.Person do select p.Name }
+    ctx.Mysqlpoc.Person
+    |> Seq.map (fun x -> x.Name)
     |> Seq.toArray
     |> sprintf "%i - %A" System.Threading.Thread.CurrentThread.ManagedThreadId
     
