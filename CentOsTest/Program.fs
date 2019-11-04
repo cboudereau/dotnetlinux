@@ -2,20 +2,15 @@
 
 // Learn more about F# at http://fsharp.org
 
-[<Literal>]
-let connString  = "Server=localhost;Database=mysqlpoc;User=root;Password=Hello"
+let [<Literal>] connString  = "Server=localhost;Database=mysqlpoc;User=root;Password=Hello"
 
-[<Literal>]
-let dbVendor    = Common.DatabaseProviderTypes.MYSQL
+let [<Literal>] dbVendor    = Common.DatabaseProviderTypes.MYSQL
 
-[<Literal>]
-let indivAmount = 1000
+let [<Literal>] indivAmount = 1000
 
-[<Literal>]
-let useOptTypes = true
+let [<Literal>] useOptTypes = true
 
-[<Literal>]
-let resPath = """C:\Users\Clément\.nuget\packages\mysqlconnector\0.60.3\lib\net471"""
+let [<Literal>] resPath = """C:\Users\Clément\.nuget\packages\mysqlconnector\0.60.3\lib\net471"""
 
 type sql = SqlDataProvider<
             dbVendor,
