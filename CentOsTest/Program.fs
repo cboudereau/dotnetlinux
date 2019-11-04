@@ -43,7 +43,5 @@ let main argv =
         |> Seq.map (fun e -> e.Name)
         |> Seq.toList
 
-    ctx.SubmitUpdates()
-
     printfn "Hello World from F#! %A" persons
     0 // return an integer exit code
