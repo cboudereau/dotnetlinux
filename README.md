@@ -20,7 +20,10 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
     create table person (id int not null auto_increment primary key, name text);
     insert into person (name) values ('Hello');
     select * from person;
- 
+	
+	# Install Dependencies
+	# [SQLProvider](https://github.com/fsprojects/SQLProvider/tree/master/tests/SqlProvider.Core.Tests/MySql)
+	
 ## Build
     build.cmd
   

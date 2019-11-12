@@ -15,7 +15,7 @@ let [<Literal>] indivAmount = 1
 
 let [<Literal>] useOptTypes = true
 
-let [<Literal>] resPath = """C:\Users\Clément\.nuget\packages\mysqlconnector\0.60.3\lib\net471"""
+let [<Literal>] resPath = """C:\gh\dotnetlinux\CentOsTest"""
 
 type sql = SqlDataProvider<
             dbVendor,
