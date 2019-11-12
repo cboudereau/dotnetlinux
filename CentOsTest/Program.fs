@@ -15,7 +15,7 @@ let [<Literal>] indivAmount = 1
 
 let [<Literal>] useOptTypes = true
 
-let [<Literal>] resPath = """~\.nuget\packages\mysqlconnector\0.60.3\lib\net471"""
+let [<Literal>] resPath = """C:\Users\Clément\.nuget\packages\mysqlconnector\0.60.3\lib\net471"""
 
 type sql = SqlDataProvider<
             dbVendor,
@@ -77,13 +77,13 @@ let webApp =
 
 type Startup() =
     member __.ConfigureServices (services : IServiceCollection) =
-        // Register default Giraffe dependencies
+        printfn "Register default Giraffe dependencies"
         services.AddGiraffe() |> ignore
 
     member __.Configure (app : IApplicationBuilder)
                         (env : IWebHostEnvironment)
                         (loggerFactory : ILoggerFactory) =
-        // Add Giraffe to the ASP.NET Core pipeline
+        printfn "Add Giraffe to the ASP.NET Core pipeline"
         app.UseGiraffe webApp
 
 [<EntryPoint>]
