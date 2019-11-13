@@ -1,0 +1,10 @@
+source https://api.nuget.org/v3/index.json
+
+framework: netcoreapp3.0
+generate_load_scripts: true
+
+nuget MySqlConnector
+nuget SQLProvider
+nuget System.Buffers
+nuget System.Runtime.InteropServices.RuntimeInformation
+nuget System.Threading.Tasks.Extensions
