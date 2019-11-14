@@ -22,7 +22,8 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
     insert into person (name) values ('Hello');
     select * from person;
 	
-	# Install Dependencies for SQLProvider (lib folder)
+## Setup dev environment
+1. Install Dependencies for SQLProvider (lib folder)
     setup.cmd
 
 ## VsCode FSharp configuration
