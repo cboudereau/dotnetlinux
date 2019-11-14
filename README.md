@@ -21,21 +21,27 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
     insert into person (name) values ('Hello');
     select * from person;
 	
-	# Install Dependencies
-	# [SQLProvider](https://github.com/fsprojects/SQLProvider/tree/master/tests/SqlProvider.Core.Tests/MySql)
+	# Install Dependencies for SQLProvider (lib folder)
+    setup.cmd
+
+## IDE
+vscode with
+
+## Features
+ - mysql client with fsharp type provider : [SQLProvider](https://github.com/fsprojects/SQLProvider/tree/master/tests/SqlProvider.Core.Tests/MySql)
+ - webserver : [Giraffe](https://github.com/giraffe-fsharp/Giraffe)
 	
 ## Build
     build.cmd
   
 ## Deploy
-    docker cp CentOsTest\bin\Release\netcoreapp3.0\rhel.6-x64\publish mysqlpoc:/home/centostest
+    docker cp bin\Release\netcoreapp3.0\rhel.6-x64\publish mysqlpoc:/home/dotnetlinux
   
 ## Run
     docker exec -it mysqlpoc bash
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true /home/centostest/CentOsTest
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true /home/centostest/dotnetlinux
   
 ## Known issues
-
 - Fix globalization (this is why I use DOTNET_SYSTEM_GLOBALIZATION_INVARIANT env var)
 - Fix the local build which failed in VS but works in the build script.
 - Fix the PublishTrimmed which run for a very long time consuming 25% of CPU. 

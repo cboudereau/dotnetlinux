@@ -37,7 +37,6 @@ let simpledemo _argv =
 
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Builder
-open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open Microsoft.AspNetCore.Hosting
 open Giraffe
