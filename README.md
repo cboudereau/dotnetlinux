@@ -4,9 +4,10 @@ This repo contains a sample app which connects on a local mysql to make basic se
 
 The setup part contains the demo env with centos 6 + mysql. Please do not do that in prod, this config is only for dev.
 
-## Setup
+## Setup Container
     docker run -it --name mysqlpoc --hostname mysqlpoc -p 3306:3306 centos:6 
-  
+    docker exec -it mysqlpoc bash
+
     # Install mysql-server
     yum update
     yum install mysql-server
