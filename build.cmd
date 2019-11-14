@@ -8,8 +8,6 @@ set VERSION=1.0.0.%CI_PIPELINE_IID%
 
 SET CONFIGURATION=Release
 
-paket restore
-
 call setup.cmd || goto error 
 
 dotnet build --configuration %CONFIGURATION% -p:Version=%VERSION% || goto error

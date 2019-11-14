@@ -24,8 +24,12 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
 	# Install Dependencies for SQLProvider (lib folder)
     setup.cmd
 
-## IDE
-vscode with
+## VsCode FSharp configuration
+vscode with this configuration for dotnet core
+    {
+      "FSharp.msbuildHost": ".net core",
+      "FSharp.useSdkScripts": true
+    }
 
 ## Features
  - mysql client with fsharp type provider : [SQLProvider](https://github.com/fsprojects/SQLProvider/tree/master/tests/SqlProvider.Core.Tests/MySql)

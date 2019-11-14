@@ -1,4 +1,9 @@
 @echo off
+
+paket restore
+
+dotnet restore
+
 IF NOT EXIST lib (
     mkdir lib
  
