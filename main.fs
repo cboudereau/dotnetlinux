@@ -2,10 +2,12 @@ module Main
 
 open FSharp.Data.Sql
 
+let [<Literal>] ResPath = __SOURCE_DIRECTORY__ + "/lib"
+
 type Sql = FSharp.Data.Sql.SqlDataProvider<
             DatabaseVendor = Common.DatabaseProviderTypes.MYSQL,
             ConnectionString ="Server=localhost;Database=mysqlpoc;User=root;Password=Hello",
-            ResolutionPath = """C:\gh\dotnetlinux\lib""",
+            ResolutionPath = ResPath,
             IndividualsAmount=1000,
             UseOptionTypes = true
             >

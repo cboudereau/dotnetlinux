@@ -39,11 +39,18 @@ vscode with this configuration for dotnet core
     build.cmd
   
 ## Deploy
-    docker cp bin\Release\netcoreapp3.0\rhel.6-x64\publish mysqlpoc:/home/dotnetlinux
+    docker cp bin\Release\netcoreapp3.0\rhel.6-x64\publish\ mysqlpoc:/home/dotnetlinux
   
 ## Run
     docker exec -it mysqlpoc bash
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true /home/centostest/dotnetlinux
+    service mysqld start
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true /home/dotnetlinux/dotnetlinux
+    
+## Test
+1. Insert into mysql "clem"
+    curl http://localhost:5000/add/clem
+2. List the person table
+    curl http://localhost:5000/list
   
 ## Known issues
 - Fix globalization (this is why I use DOTNET_SYSTEM_GLOBALIZATION_INVARIANT env var)
