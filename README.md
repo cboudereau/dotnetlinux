@@ -25,7 +25,7 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
 ## Setup local dev environment (Install Dependencies for SQLProvider (lib folder))
     setup.cmd
 
-## VsCode FSharp configuration for dotnet core
+## VsCode (settings.json) FSharp configuration for dotnet core
     {
       "FSharp.msbuildHost": ".net core",
       "FSharp.useSdkScripts": true
