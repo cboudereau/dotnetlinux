@@ -4,9 +4,11 @@ if not defined CI_PIPELINE_IID (
 	set CI_PIPELINE_IID=0
 )
 
-set VERSION=1.0.0.%CI_PIPELINE_IID%
+if [%1]==[] (
+	set CONFIGURATION=Release
+) else set CONFIGURATION=%1
 
-SET CONFIGURATION=Release
+set VERSION=1.0.0.%CI_PIPELINE_IID%
 
 call setup.cmd || goto error 
 

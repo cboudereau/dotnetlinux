@@ -7,7 +7,7 @@
             "label": "build",
             "type": "shell",
             "command": "./build.cmd",
-            "args": [ ],
+            "args": [ "Debug" ],
             "group": "build",
             "presentation": {
                 // Reveal the output only if unrecognized errors occur.
