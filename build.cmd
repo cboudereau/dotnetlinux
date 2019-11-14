@@ -12,7 +12,7 @@ set VERSION=1.0.0.%CI_PIPELINE_IID%
 
 call setup.cmd || goto error 
 
-dotnet build --configuration %CONFIGURATION% -p:Version=%VERSION% || goto error
+dotnet build --no-restore --configuration %CONFIGURATION% -p:Version=%VERSION% || goto error
 REM dotnet publish --configuration %CONFIGURATION% -p:Version=%VERSION% --self-contained -r rhel.6-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true || goto error
 dotnet publish --configuration %CONFIGURATION% -p:Version=%VERSION% --self-contained -r rhel.6-x64 /p:PublishSingleFile=true || goto error
 
