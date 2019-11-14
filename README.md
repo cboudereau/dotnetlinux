@@ -1,6 +1,6 @@
-# CentOsTest
+# dotnetlinux (a bad named repo...)
 
-This repo contains a sample app which connect on a local mysql to make basic select and insert operations exposed as a simple http api.
+This repo contains a sample app which connects on a local mysql to make basic select and insert operations exposed as a simple http api.
 
 The setup part contains the demo env with centos 6 + mysql. Please do not do that in prod, this config is only for dev.
 
@@ -54,5 +54,8 @@ vscode with this configuration for dotnet core
   
 ## Known issues
 - Fix globalization (this is why I use DOTNET_SYSTEM_GLOBALIZATION_INVARIANT env var)
-- Fix the local build which failed in VS but works in the build script.
 - Fix the PublishTrimmed which run for a very long time consuming 25% of CPU. 
+
+## TODO
+- Use FAKE to save schema config and avoid preparing mysql dependencies on build.
+- Gitlab : configure 2 builds, one isolated and another one with a mysql container.

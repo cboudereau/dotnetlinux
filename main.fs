@@ -1,4 +1,8 @@
+#if INTERACTIVE
+#load ".paket/load/main.group.fsx"
+#else
 module Main
+#endif
 
 open FSharp.Data.Sql
 
