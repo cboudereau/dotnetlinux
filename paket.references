@@ -3,3 +3,5 @@ SQLProvider
 System.Buffers
 System.Runtime.InteropServices.RuntimeInformation
 System.Threading.Tasks.Extensions
+FSharp.Core
+System.ComponentModel.Composition

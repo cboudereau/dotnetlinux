@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="main.fsx" />
+    <Compile Include="main.fs" />
   </ItemGroup>
   <Import Project=".paket\Paket.Restore.targets" />
 </Project>
