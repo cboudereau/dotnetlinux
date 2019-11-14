@@ -3,6 +3,7 @@ source https://api.nuget.org/v3/index.json
 framework: netcoreapp3.0
 generate_load_scripts: true
 
+nuget Giraffe
 nuget MySqlConnector
 nuget SQLProvider
 nuget System.Buffers
