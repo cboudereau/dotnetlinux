@@ -59,3 +59,7 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
 ## TODO
 - Use FAKE to save schema config and avoid preparing mysql dependencies on build.
 - Gitlab : configure 2 builds, one isolated and another one with a mysql container.
+
+## Deeper docker usage
+## Prepare a dedicated mysql image
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=Hello -p 3306:3306 -d -v C:\gh\dotnetlinux\sql\:/docker-entrypoint-initdb.d mysql:8

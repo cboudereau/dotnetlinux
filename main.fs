@@ -10,47 +10,30 @@ let [<Literal>] ResPath = __SOURCE_DIRECTORY__ + "/lib"
 
 type Sql = FSharp.Data.Sql.SqlDataProvider<
             DatabaseVendor = Common.DatabaseProviderTypes.MYSQL,
-            ConnectionString ="Server=localhost;Database=mysqlpoc;User=root;Password=Hello",
+            ConnectionString ="Server=localhost;Database=mysqlpoc;User=sqluser;Password=sqluserpwd",
             ResolutionPath = ResPath,
             IndividualsAmount=1000,
             UseOptionTypes = true
             >
 
-let simpledemo _argv =
-    let ctx = Sql.GetDataContext()
-     
-    printfn "Who do you want to add in mysql (press enter to skip this step) ?"
-
-    System.Console.ReadLine() |> fun x -> if x <> "" then Some x else None
-    |> Option.map (fun name -> 
-        let p = ctx.Mysqlpoc.Person.Create()
-        p.Name <- Some name
-        ctx.SubmitUpdates() 
-        sprintf "%s has been added" name)
-    |> Option.defaultValue "nothing has been added"
-    |> printfn "%s"
-    
-    let persons = 
-        ctx.Mysqlpoc.Person
-        |> Seq.map (fun e -> e.Name)
-        |> Seq.toList
-
-    printfn "Hello World from F#! %A" persons
-    
-    System.Console.ReadLine() |> ignore
-    
-    0 // return an integer exit code 
-
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.Logging
 open Microsoft.AspNetCore.Hosting
+open Microsoft.Extensions.Configuration
 open Giraffe
 
 FSharp.Data.Sql.Common.QueryEvents.SqlQueryEvent |> Event.add (printfn "Executing SQL: %O")
 
+let connString = 
+    System.Environment.GetEnvironmentVariable("MYSQL_CONNSTRING")
+    |> Option.ofObj
+    |> Option.defaultValue "Server=localhost;Database=mysqlpoc;User=root;Password=Hello"
+
+printfn "using %s connString" connString
+
 let add x = 
-    let ctx = Sql.GetDataContext()
+    let ctx = Sql.GetDataContext(connString)
     let p = ctx.Mysqlpoc.Person.Create() in p.Name <- Some x
 
     do ctx.SubmitUpdates()
@@ -61,7 +44,7 @@ let add x =
     |> sprintf "%i - %A" System.Threading.Thread.CurrentThread.ManagedThreadId
     
 let getAll () = 
-    let ctx = Sql.GetDataContext()
+    let ctx = Sql.GetDataContext(connString)
     printfn "getAll called"
     query { 
         for p in ctx.Mysqlpoc.Person do 
@@ -89,10 +72,13 @@ type Startup() =
         app.UseGiraffe webApp
 
 [<EntryPoint>]
-let main _ =
+let main args =
+    let config = ConfigurationBuilder().AddCommandLine(args).Build();
     WebHostBuilder()
         .UseKestrel()
         .UseStartup<Startup>()
+        .UseConfiguration(config)
+        .ConfigureLogging(fun logging -> logging.AddConsole() |> ignore)
         .Build()
         .Run()
     0

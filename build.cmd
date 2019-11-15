@@ -14,7 +14,7 @@ call setup.cmd || goto error
 
 dotnet build --no-restore --configuration %CONFIGURATION% -p:Version=%VERSION% || goto error
 REM dotnet publish --configuration %CONFIGURATION% -p:Version=%VERSION% --self-contained -r rhel.6-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true || goto error
-dotnet publish --configuration %CONFIGURATION% -p:Version=%VERSION% --self-contained -r rhel.6-x64 /p:PublishSingleFile=true || goto error
+dotnet publish -o app --configuration %CONFIGURATION% -p:Version=%VERSION% --self-contained -r rhel.6-x64 /p:PublishSingleFile=true || goto error
 
 goto success
 

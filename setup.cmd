@@ -14,3 +14,5 @@ IF NOT EXIST lib (
     copy packages\System.Runtime.InteropServices.RuntimeInformation\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll lib\System.Runtime.InteropServices.RuntimeInformation.dll
     copy packages\System.Threading.Tasks.Extensions\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll lib\System.Threading.Tasks.Extensions.dll
 )
+
+docker-compose run -d --rm -p 3306:3306 --name localdb db 2>NUL

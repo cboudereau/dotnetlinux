@@ -1,0 +1,38 @@
+# docker-compose -f demo.yml up
+# docker-compose -f demo.yml down
+
+version: "3.7"
+  
+services:
+  db:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+       - ./sql:/docker-entrypoint-initdb.d:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=Hello
+    networks:
+      - data
+  service:
+    image: centos:6
+    environment:
+      - MYSQL_CONNSTRING=Server=dotnetlinux_db_1;Database=mysqlpoc;User=root;Password=Hello
+      - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+    volumes:
+      - ./app:/home/app
+    entrypoint: 
+      - /home/app/dotnetlinux
+    command:
+      - --urls=http://0.0.0.0:5000
+    ports: 
+      - "5000:5000"
+    networks:
+      - data
+
+
+networks:
+  data:
+
+volumes:
+  sql:
+  app:
