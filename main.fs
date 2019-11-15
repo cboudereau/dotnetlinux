@@ -10,7 +10,7 @@ let [<Literal>] ResPath = __SOURCE_DIRECTORY__ + "/lib"
 
 type Sql = FSharp.Data.Sql.SqlDataProvider<
             DatabaseVendor = Common.DatabaseProviderTypes.MYSQL,
-            ConnectionString ="Server=localhost;Database=mysqlpoc;User=sqluser;Password=sqluserpwd",
+            ConnectionString ="Server=localhost;Database=data;User=sqluser;Password=sqluserpwd",
             ResolutionPath = ResPath,
             IndividualsAmount=1000,
             UseOptionTypes = true
@@ -34,11 +34,11 @@ printfn "using %s connString" connString
 
 let add x = 
     let ctx = Sql.GetDataContext(connString)
-    let p = ctx.Mysqlpoc.Person.Create() in p.Name <- Some x
+    let p = ctx.Data.Person.Create() in p.Name <- Some x
 
     do ctx.SubmitUpdates()
     
-    ctx.Mysqlpoc.Person
+    ctx.Data.Person
     |> Seq.map (fun x -> x.Name)
     |> Seq.toArray
     |> sprintf "%i - %A" System.Threading.Thread.CurrentThread.ManagedThreadId
@@ -47,7 +47,7 @@ let getAll () =
     let ctx = Sql.GetDataContext(connString)
     printfn "getAll called"
     query { 
-        for p in ctx.Mysqlpoc.Person do 
+        for p in ctx.Data.Person do 
         select p.Name 
     }
     |> Seq.toArray

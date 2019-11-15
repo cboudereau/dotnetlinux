@@ -46,20 +46,29 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
     service mysqld start
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true /home/dotnetlinux/dotnetlinux
     
+## Deeper docker usage : docker-compose
+## Prepare a dedicated mysql container base on the compose
+    setup.cmd
+
+## Build (the type provider will connect to the localdb container to build)
+    build.cmd
+
+## Run (mount the app folder wich contains the poc and run the db and giraffe service)
+    docker-compose up
+
+## Clean
+    docker-compose down
+
 ## Test
 1. Insert into mysql "clem"
     curl http://localhost:5000/add/clem
 2. List the person table
-    curl http://localhost:5000/list
-  
+    curl http://localhost:5000/list  
+
 ## Known issues
 - Fix globalization (this is why I use DOTNET_SYSTEM_GLOBALIZATION_INVARIANT env var)
 - Fix the PublishTrimmed which run for a very long time consuming 25% of CPU. 
+- Wait the mysql starting between setup and build (maybe use the docker logs and wait for mysql connected)
 
 ## TODO
 - Use FAKE to save schema config and avoid preparing mysql dependencies on build.
-- Gitlab : configure 2 builds, one isolated and another one with a mysql container.
-
-## Deeper docker usage
-## Prepare a dedicated mysql image
-docker run --name mysql -e MYSQL_ROOT_PASSWORD=Hello -p 3306:3306 -d -v C:\gh\dotnetlinux\sql\:/docker-entrypoint-initdb.d mysql:8
