@@ -8,4 +8,6 @@
 
     use data;
     create table person (id int not null auto_increment primary key, name text);
+
+    -- Sample data
     insert into person (name) values ('clem');

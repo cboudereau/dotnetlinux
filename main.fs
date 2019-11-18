@@ -8,7 +8,7 @@ open FSharp.Data.Sql
 
 let [<Literal>] ResPath = __SOURCE_DIRECTORY__ + "/lib"
 
-type Sql = FSharp.Data.Sql.SqlDataProvider<
+type Sql = SqlDataProvider<
             DatabaseVendor = Common.DatabaseProviderTypes.MYSQL,
             ConnectionString ="Server=localhost;Database=data;User=sqluser;Password=sqluserpwd",
             ResolutionPath = ResPath,
@@ -16,33 +16,30 @@ type Sql = FSharp.Data.Sql.SqlDataProvider<
             UseOptionTypes = true
             >
 
-open Microsoft.Extensions.DependencyInjection
-open Microsoft.AspNetCore.Builder
-open Microsoft.Extensions.Logging
-open Microsoft.AspNetCore.Hosting
-open Microsoft.Extensions.Configuration
-open Giraffe
+Common.QueryEvents.SqlQueryEvent |> Event.add (printfn "Executing SQL: %O")
 
-FSharp.Data.Sql.Common.QueryEvents.SqlQueryEvent |> Event.add (printfn "Executing SQL: %O")
+open Microsoft.AspNetCore.Hosting
+open Microsoft.AspNetCore.Http
+
+open Microsoft.Extensions.Logging
+open Microsoft.Extensions.Configuration
+
+open Giraffe
+open FSharp.Control.Tasks.V2.ContextInsensitive
+
 
 let connString = 
     System.Environment.GetEnvironmentVariable("MYSQL_CONNSTRING")
     |> Option.ofObj
-    |> Option.defaultValue "Server=localhost;Database=mysqlpoc;User=root;Password=Hello"
+    |> Option.defaultValue "Server=localhost;Database=data;User=root;Password=Hello"
 
 printfn "using %s connString" connString
 
-let add x = 
-    let ctx = Sql.GetDataContext(connString)
-    let p = ctx.Data.Person.Create() in p.Name <- Some x
+type [<CLIMutable>] Person =
+    {
+        Name : string
+    }
 
-    do ctx.SubmitUpdates()
-    
-    ctx.Data.Person
-    |> Seq.map (fun x -> x.Name)
-    |> Seq.toArray
-    |> sprintf "%i - %A" System.Threading.Thread.CurrentThread.ManagedThreadId
-    
 let getAll () = 
     let ctx = Sql.GetDataContext(connString)
     printfn "getAll called"
@@ -53,12 +50,67 @@ let getAll () =
     |> Seq.toArray
     |> sprintf "%i - %A" System.Threading.Thread.CurrentThread.ManagedThreadId
 
+module Person = 
+    let create name = { Name=name }
+
+module Sql = 
+    module Person = 
+        let add (person:Person) =
+            let ctx = Sql.GetDataContext(connString)
+            ctx.Data.Person.Create(Name=Some person.Name) |> ignore 
+
+            do ctx.SubmitUpdates()
+
+        let list () = 
+            let ctx = Sql.GetDataContext(connString)
+            ctx.Data.Person
+            |> Seq.choose(fun p -> p.Name |> Option.map Person.create) 
+            |> Seq.toArray
+        
+        let tryGetByName name = 
+            let ctx = Sql.GetDataContext(connString)
+            ctx.Data.Person
+            |> Seq.tryFind (fun p -> p.Name = Some name)
+            |> Option.bind (fun p -> p.Name)
+            |> Option.map Person.create
+
+module Handler =
+    module Person =
+        let add : HttpHandler =
+            fun (next : HttpFunc) (ctx : HttpContext) ->
+                task {
+                    let! person = ctx.BindJsonAsync<Person>()
+                    Sql.Person.add person
+
+                    return! Successful.NO_CONTENT next ctx
+                } 
+
+        let get name = 
+            fun (next : HttpFunc) (ctx : HttpContext) ->
+                task {
+                    match Sql.Person.tryGetByName name with
+                    | Some p -> return! Successful.ok (json p) next ctx
+                    | None -> return! RequestErrors.NOT_FOUND (sprintf "%s not found" name) next ctx
+                }
+        let list = 
+            fun next ctx ->
+                task {
+                    let l = Sql.Person.list ()
+                    return! Successful.OK l next ctx
+                }
 let webApp =
     choose [
-        route "/ping"   >=> text "pong"
-        route "/"       >=> htmlFile "/pages/index.html"
-        routef "/add/%s" (add >> text)
-        route "/list"   >=> warbler (fun _ -> getAll () |> text) ]
+        GET >=> route "/ping" >=> text "pong"
+
+        subRoute "/person" (choose [
+            GET >=> choose [
+                route "s" >=> Handler.Person.list
+                routef "/%s" Handler.Person.get
+            ]
+
+            POST >=> Handler.Person.add
+        ])
+    ]
 
 [<EntryPoint>]
 let main args =
