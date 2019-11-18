@@ -15,8 +15,10 @@ services:
       - data
   service:
     image: centos:6
+    links:
+      - "db:db"
     environment:
-      - MYSQL_CONNSTRING=Server=dotnetlinux_db_1;Database=data;User=root;Password=Hello
+      - MYSQL_CONNSTRING=Server=db;Database=data;User=root;Password=Hello
       - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
     volumes:
       - ./app:/home/app
