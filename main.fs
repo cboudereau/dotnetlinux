@@ -60,23 +60,17 @@ let webApp =
         routef "/add/%s" (add >> text)
         route "/list"   >=> warbler (fun _ -> getAll () |> text) ]
 
-type Startup() =
-    member __.ConfigureServices (services : IServiceCollection) =
-        printfn "Register default Giraffe dependencies"
-        services.AddGiraffe() |> ignore
-
-    member __.Configure (app : IApplicationBuilder)
-                        (env : IWebHostEnvironment)
-                        (loggerFactory : ILoggerFactory) =
-        printfn "Add Giraffe to the ASP.NET Core pipeline"
-        app.UseGiraffe webApp
-
 [<EntryPoint>]
 let main args =
     let config = ConfigurationBuilder().AddCommandLine(args).Build();
     WebHostBuilder()
         .UseKestrel()
-        .UseStartup<Startup>()
+        .Configure(fun app -> 
+            printfn "Add Giraffe to the ASP.NET Core pipeline"
+            app.UseGiraffe webApp)
+        .ConfigureServices(fun services -> 
+            printfn "Register default Giraffe dependencies"
+            services.AddGiraffe() |> ignore)
         .UseConfiguration(config)
         .ConfigureLogging(fun logging -> logging.AddConsole() |> ignore)
         .Build()
