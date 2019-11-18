@@ -3,65 +3,35 @@
 This repo contains a sample app which connects on a local mysql to make basic select and insert operations exposed as a simple http api.
 
 The setup part contains the demo env with centos 6 + mysql. Please do not do that in prod, this config is only for dev.
-
-## Setup Container
-    docker run -it --name mysqlpoc --hostname mysqlpoc -p 3306:3306 centos:6 
-    docker exec -it mysqlpoc bash
-
-    # Install mysql-server
-    yum update
-    yum install mysql-server
-    /sbin/chkconfig --levels 235 mysqld on
-    # Yes to all expect for root remoting and use Hello as password, only for tests!
-    mysql_secure_installation
-  
-    # Create the Database
-    mysql -uroot -pHello
-    create database mysqlpoc;
-    create table person (id int not null auto_increment primary key, name text);
-    insert into person (name) values ('Hello');
-    select * from person;
 	
-## Setup local dev environment (Install Dependencies for SQLProvider (lib folder))
+## Features
+ - mysql client with fsharp type provider : [SQLProvider](https://github.com/fsprojects/SQLProvider/tree/master/tests/SqlProvider.Core.Tests/MySql)
+ - webserver : [Giraffe](https://github.com/giraffe-fsharp/Giraffe)
+	
+## Setup local dev environment (Install the localdb mysql container and dependencies for SQLProvider (lib folder))
     setup.cmd
 
-## VsCode (settings.json) FSharp configuration for dotnet core
+## VsCode (settings.json)
+### Extensions
+ - Install Ionide extension 
+### FSharp configuration for dotnet core
     {
       "FSharp.msbuildHost": ".net core",
       "FSharp.useSdkScripts": true
     }
 
-## Features
- - mysql client with fsharp type provider : [SQLProvider](https://github.com/fsprojects/SQLProvider/tree/master/tests/SqlProvider.Core.Tests/MySql)
- - webserver : [Giraffe](https://github.com/giraffe-fsharp/Giraffe)
-	
-## Build
-    build.cmd
-  
-## Deploy
-    docker cp bin\Release\netcoreapp3.0\rhel.6-x64\publish\ mysqlpoc:/home/dotnetlinux
-  
-## Run
-    docker exec -it mysqlpoc bash
-    service mysqld start
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true /home/dotnetlinux/dotnetlinux
-    
-## Deeper docker usage : docker-compose
-## Prepare a dedicated mysql container base on the compose
-    setup.cmd
-
 ## Build (the type provider will connect to the localdb container to build)
     build.cmd
-
-## Run (mount the app folder wich contains the poc and run the db and giraffe service)
+  
+## Deploy/Run (mount the app folder wich contains the poc and run the db and giraffe service)
     docker-compose up
-
+  
 ## Clean
     docker-compose down
 
 ## Test
 1. Insert into mysql "clem"
-    curl http://localhost:5000/add/clem
+    curl http://localhost:5000/add?name=clem
 2. List the person table
     curl http://localhost:5000/list  
 
