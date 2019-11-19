@@ -31,9 +31,9 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
 
 ## Test
 1. Insert into mysql "clem"
-    curl http://localhost:5000/add?name=clem
+    iwr -Method Post -Body '{"name":"hel"}' -Uri http://localhost:5000/person
 2. List the person table
-    curl http://localhost:5000/list  
+    curl http://localhost:5000/persons
 
 ## Known issues
 - Fix globalization (this is why I use DOTNET_SYSTEM_GLOBALIZATION_INVARIANT env var)
