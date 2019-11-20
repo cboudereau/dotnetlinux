@@ -41,4 +41,5 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
 - Wait the mysql starting between setup and build (maybe use the docker logs and wait for mysql connected)
 
 ## TODO
+- create a dotnet template new mysql with in parameter the name of the target os
 - Use FAKE to save schema config and avoid preparing mysql dependencies on build.

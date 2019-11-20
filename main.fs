@@ -27,7 +27,6 @@ open Microsoft.Extensions.Configuration
 open Giraffe
 open FSharp.Control.Tasks.V2.ContextInsensitive
 
-
 let connString = 
     System.Environment.GetEnvironmentVariable("MYSQL_CONNSTRING")
     |> Option.ofObj
