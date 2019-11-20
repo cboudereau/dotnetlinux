@@ -27,7 +27,10 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
     docker-compose up
   
 ## Clean
-    docker-compose down
+    docker-compose down && git clean -fxd
+
+## Run
+    run.cmd
 
 ## Test
 1. Insert into mysql "clem"
@@ -38,7 +41,6 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
 ## Known issues
 - Fix globalization (this is why I use DOTNET_SYSTEM_GLOBALIZATION_INVARIANT env var)
 - Fix the PublishTrimmed which run for a very long time consuming 25% of CPU. 
-- Wait the mysql starting between setup and build (maybe use the docker logs and wait for mysql connected)
 
 ## TODO
 - create a dotnet template new mysql with in parameter the name of the target os

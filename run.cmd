@@ -1,0 +1,1 @@
+call build.cmd && docker-compose up
