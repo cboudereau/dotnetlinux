@@ -16,8 +16,8 @@ services:
   service:
     # WSL2 and centos 6 bug.. https://github.com/microsoft/WSL/issues/4694
     # image: centos:6
-    # image: quay.io/pypa/manylinux2010_x86_64
     image: centos:7
+    # image: quay.io/pypa/manylinux2010_x86_64
     links:
       - "db:db"
     environment:

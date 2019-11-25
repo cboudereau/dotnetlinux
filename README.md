@@ -49,6 +49,8 @@ When wsl2 is configured through Docker Desktop Edge it is possible to check the 
       docker-desktop         Running         2
 
 5. Fix for older system
+My config is not working on centos 6 : https://github.com/microsoft/WSL/issues/4694
+To test with centos 6 change the os version in the yaml and use the VM based docker.
 Create a .wslconfig in order to run older os like centos 6
 
    %userprofile%\.wslconfig
