@@ -48,6 +48,14 @@ When wsl2 is configured through Docker Desktop Edge it is possible to check the 
       docker-desktop-data    Running         2
       docker-desktop         Running         2
 
+5. Fix for older system
+Create a .wslconfig in order to run older os like centos 6
+
+   %userprofile%\.wslconfig
+
+   [wsl2]
+   kernelCommandLine = vsyscall=emulate
+
 In my case, I have the Ubuntu one and the 2 dockers
 When you restart Windows Terminal, you can run ubuntu commands directly!
 
