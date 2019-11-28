@@ -34,12 +34,15 @@ I removed wsl1 to have less problems but you can try directly if it works.
 
 Follow the instructions from this page : https://docs.microsoft.com/en-us/windows/wsl/wsl2-install
 
-3. Install Docker Desktop Edge
+3. Configure wsl2
+    wsl --set-default-version 2
+
+4. Install Docker Desktop Edge
 Download the last Docker Desktop Edge which is a technical preview here : https://docs.docker.com/docker-for-windows/edge-release-notes/
 When it is installed, you can switch to wsl2 back and forth in the general settings (Enable the experimental WSL 2 based engine)
 For further details, follow those instructions : https://docs.docker.com/docker-for-windows/wsl-tech-preview/
 
-4. Configure
+5. Configure
 When wsl2 is configured through Docker Desktop Edge it is possible to check the runtime 
     wsl -l -v
 
@@ -48,7 +51,7 @@ When wsl2 is configured through Docker Desktop Edge it is possible to check the 
       docker-desktop-data    Running         2
       docker-desktop         Running         2
 
-5. Fix for older system
+6. Fix for older system
 Create a .wslconfig in order to run older os like centos 6
 
    %userprofile%\.wslconfig
@@ -58,6 +61,10 @@ Create a .wslconfig in order to run older os like centos 6
 
 In my case, I have the Ubuntu one and the 2 dockers
 When you restart Windows Terminal, you can run ubuntu commands directly!
+
+### (Optional) Install docker cli on Ubuntu WSL 2
+If already have configured an ubuntu distrib running on wsl 2.
+In the docker desktop settings > Resources > WSL Integration, activate the ubuntu distro to have the docker cli installed
 
 ## Setup local dev environment (Install the localdb mysql container and dependencies for SQLProvider (lib folder))
     setup.cmd
