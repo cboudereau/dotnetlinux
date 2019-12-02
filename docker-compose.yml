@@ -12,11 +12,12 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=Hello
     networks:
-      - data
+      data:
+        aliases:
+          - "db"
+  
   service:
     image: centos:6
-    links:
-      - "db:db"
     environment:
       - MYSQL_CONNSTRING=Server=db;Database=data;User=root;Password=Hello
       - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
@@ -31,9 +32,9 @@ services:
     networks:
       - data
 
-
 networks:
   data:
+    driver: bridge
 
 volumes:
   sql:
