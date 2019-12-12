@@ -1,3 +1,68 @@
+// 0 Prepare a mysql server with docker-compose
+
+
+// Why docker in that case
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 1 SQL Provider
+
+// ORM at design type only!
+// Use the docker-compose for localdb and build > see the build.cmd
+
 #if INTERACTIVE
 #load ".paket/load/main.group.fsx"
 #else
@@ -18,24 +83,12 @@ type Sql = SqlDataProvider<
 
 Common.QueryEvents.SqlQueryEvent |> Event.add (printfn "Executing SQL: %O")
 
-open Microsoft.AspNetCore.Hosting
-open Microsoft.AspNetCore.Http
-
-open Microsoft.Extensions.Logging
-open Microsoft.Extensions.Configuration
-
-open Giraffe
-open FSharp.Control.Tasks.V2.ContextInsensitive
-
 let connString = 
     System.Environment.GetEnvironmentVariable("MYSQL_CONNSTRING")
     |> Option.ofObj
     |> Option.defaultValue "Server=localhost;Database=data;User=root;Password=Hello"
 
-type [<CLIMutable>] Person =
-    {
-        Name : string
-    }
+type [<CLIMutable>] Person = { Name : string }
 
 module Person = 
     let create name = { Name=name }
@@ -61,6 +114,142 @@ module Sql =
             |> Option.bind (fun p -> p.Name)
             |> Option.map Person.create
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 2/ Giraffe
+open Giraffe
+
+let giraffeDemo =
+    choose [
+        GET >=> route "/ping" >=> text "pong"
+        GET >=> route "/hello" >=> text "hello world!" ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 3/Giraffe + SQLProvider
+// See the run.cmd
+
+open Microsoft.AspNetCore.Hosting
+open Microsoft.AspNetCore.Http
+
+open Microsoft.Extensions.Logging
+open Microsoft.Extensions.Configuration
+
+open FSharp.Control.Tasks.V2.ContextInsensitive
+
 module Handler =
     module Person =
         let add : HttpHandler =
@@ -85,19 +274,19 @@ module Handler =
                     let l = Sql.Person.list ()
                     return! Successful.OK l next ctx
                 }
-let webApp =
-    choose [
-        GET >=> route "/ping" >=> text "pong"
+// let webApp =
+//     choose [
+//         GET >=> route "/ping" >=> text "pong"
 
-        subRoute "/person" (choose [
-            GET >=> choose [
-                route "s" >=> Handler.Person.list
-                routef "/%s" Handler.Person.get
-            ]
+//         subRoute "/person" (choose [
+//             GET >=> choose [
+//                 route "s" >=> Handler.Person.list
+//                 routef "/%s" Handler.Person.get
+//             ]
 
-            POST >=> Handler.Person.add
-        ])
-    ]
+//             POST >=> Handler.Person.add
+//         ])
+//     ]
 
 [<EntryPoint>]
 let main args =
@@ -106,7 +295,8 @@ let main args =
         .UseKestrel()
         .Configure(fun app -> 
             printfn "Add Giraffe to the ASP.NET Core pipeline"
-            app.UseGiraffe webApp)
+            app.UseGiraffe giraffeDemo)
+            // app.UseGiraffe webApp)
         .ConfigureServices(fun services -> 
             printfn "Register default Giraffe dependencies"
             services.AddGiraffe() |> ignore)
