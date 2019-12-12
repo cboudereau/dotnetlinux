@@ -97,7 +97,7 @@ In the docker desktop settings > Resources > WSL Integration, activate the ubunt
     curl http://localhost:5000/persons
 
 ## Known issues
-- SQLProvider with dotnetcore 3 and MySql : https://github.com/fsprojects/SQLProvider/tree/master/tests/SqlProvider.Core.Tests/MySql
+- SQLProvider with dotnetcore 3 and MySql : https://github.com/fsprojects/SQLProvider/tree/master/tests/SqlProvider.Core.Tests/MySql (see the installdeps.cmd script)
 - Fix globalization (this is why I use DOTNET_SYSTEM_GLOBALIZATION_INVARIANT env var)
 - Fix the PublishTrimmed which run for a very long time consuming 25% of CPU. 
 
