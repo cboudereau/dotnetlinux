@@ -32,22 +32,10 @@ let connString =
     |> Option.ofObj
     |> Option.defaultValue "Server=localhost;Database=data;User=root;Password=Hello"
 
-printfn "using %s connString" connString
-
 type [<CLIMutable>] Person =
     {
         Name : string
     }
-
-let getAll () = 
-    let ctx = Sql.GetDataContext(connString)
-    printfn "getAll called"
-    query { 
-        for p in ctx.Data.Person do 
-        select p.Name 
-    }
-    |> Seq.toArray
-    |> sprintf "%i - %A" System.Threading.Thread.CurrentThread.ManagedThreadId
 
 module Person = 
     let create name = { Name=name }
