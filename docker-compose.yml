@@ -1,6 +1,3 @@
-# docker-compose -f demo.yml up
-# docker-compose -f demo.yml down
-
 version: "3.7"
   
 services:
