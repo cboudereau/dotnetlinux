@@ -81,6 +81,7 @@ In the docker desktop settings > Resources > WSL Integration, activate the ubunt
     }
 ## VsCode tasks
 VsCode tasks is used to run the app locally by just pressing F5 in vscode which run a docker-compose to setup the database for the build.cmd process.
+The tasks.json is available in the .vscode folder where the build.cmd is used to run in debug the app locally.
 
 ## Build (the type provider will connect to the localdb container to build)
     build.cmd
