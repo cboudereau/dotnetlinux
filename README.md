@@ -10,6 +10,7 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
  - webserver : [Giraffe](https://github.com/giraffe-fsharp/Giraffe)
  - dotnetcore : an app compatible for windows (locally) and for linux (with dotnet publish)
  - Deploy locally database and app in a legacy context by executing run.cmd (thanks to docker-compose) but also run the app locally by pressing F5 in vs code.
+ - App code is available into a single file main.fs which contains for the first part the SQL part and at the end of file, the giraffe web api demo.
 
 ## Setup Docker Desktop
 ### Normal version
@@ -78,6 +79,8 @@ In the docker desktop settings > Resources > WSL Integration, activate the ubunt
       "FSharp.msbuildHost": ".net core",
       "FSharp.useSdkScripts": true
     }
+## VsCode tasks
+VsCode tasks is used to run the app locally by just pressing F5 in vscode which run a docker-compose to setup the database for the build.cmd process.
 
 ## Build (the type provider will connect to the localdb container to build)
     build.cmd
