@@ -9,7 +9,8 @@ The setup part contains the demo env with centos 6 + mysql. Please do not do tha
  - mysql client with fsharp type provider : [SQLProvider](https://github.com/fsprojects/SQLProvider/tree/master/tests/SqlProvider.Core.Tests/MySql)
  - webserver : [Giraffe](https://github.com/giraffe-fsharp/Giraffe)
  - dotnetcore : an app compatible for windows (locally) and for linux (with dotnet publish)
- 
+ - Deploy locally database and app in a legacy context by executing run.cmd (thanks to docker-compose) but also run the app locally by pressing F5 in vs code.
+
 ## Setup Docker Desktop
 ### Normal version
 
