@@ -81,7 +81,7 @@ In the docker desktop settings > Resources > WSL Integration, activate the ubunt
 ## Build (the type provider will connect to the localdb container to build)
     build.cmd
   
-## Deploy/Run (mount the app folder wich contains the poc and run the db and giraffe service)
+## Deploy/Run (mount the app folder which contains the poc and run the db and giraffe service)
     docker-compose up
   
 ## Clean
