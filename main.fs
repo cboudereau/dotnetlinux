@@ -274,19 +274,19 @@ module Handler =
                     let l = Sql.Person.list ()
                     return! Successful.OK l next ctx
                 }
-// let webApp =
-//     choose [
-//         GET >=> route "/ping" >=> text "pong"
+let webApp =
+    choose [
+        GET >=> route "/ping" >=> text "pong"
 
-//         subRoute "/person" (choose [
-//             GET >=> choose [
-//                 route "s" >=> Handler.Person.list
-//                 routef "/%s" Handler.Person.get
-//             ]
+        subRoute "/person" (choose [
+            GET >=> choose [
+                route "s" >=> Handler.Person.list
+                routef "/%s" Handler.Person.get
+            ]
 
-//             POST >=> Handler.Person.add
-//         ])
-//     ]
+            POST >=> Handler.Person.add
+        ])
+    ]
 
 [<EntryPoint>]
 let main args =
@@ -295,8 +295,8 @@ let main args =
         .UseKestrel()
         .Configure(fun app -> 
             printfn "Add Giraffe to the ASP.NET Core pipeline"
-            app.UseGiraffe giraffeDemo)
-            // app.UseGiraffe webApp)
+            app.UseGiraffe giraffeDemo
+            app.UseGiraffe webApp)
         .ConfigureServices(fun services -> 
             printfn "Register default Giraffe dependencies"
             services.AddGiraffe() |> ignore)
